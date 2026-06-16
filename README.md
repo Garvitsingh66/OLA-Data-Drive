@@ -1,185 +1,96 @@
-<div align="center">
+# Ola Data Drive — Ride Performance Hub
 
-# 🚖 OLA Data Drive — Ride Performance Hub
+An end-to-end data analytics project analyzing **50K ride-booking records** from Ola. This project utilizes a robust modern data stack—combining **SQL** for data warehousing/cleaning, **Python** for preliminary data exploration, and **Power BI (DAX)** for interactive diagnostic and predictive dashboard architecture.
 
-<img src="Overview.png" alt="OLA Dashboard Overview" width="100%"/>
-
-<br/>
-
-[![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
-[![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](#)
-[![DAX](https://img.shields.io/badge/DAX-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](#)
-[![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/)
-
-**An end-to-end Power BI analytics dashboard on OLA ride-hailing operations — January 2024**
-
-[📊 View Dashboard Pages](#-dashboard-pages) · [🔍 Key Insights](#-key-insights) · [🛠️ Tech Stack](#-tech-stack) · [🚀 Getting Started](#-getting-started)
-
-</div>
+The dashboard provides actionable business insights into ride fulfillment dynamics, revenue leakage via cancellations, customer/driver sentiment loops, and vehicle performance optimization.
 
 ---
 
-## 📈 At a Glance
-
-<div align="center">
-
-| 📦 Total Bookings | 💰 Total Revenue | 🎯 Avg Booking Value | 📍 Avg Ride Distance | ✅ Success Rate | ❌ Cancellation Rate |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| **50,000** | **₹34.27M** | **₹685.35** | **17.04 km** | **66.97%** | **33.03%** |
-
-</div>
+## 🛠️ Tech Stack & Architecture
+* **Data Source:** Kaggle (Ola Ride Dataset)
+* **Database:** SQL (Data Cleaning, Schema Validation, Null Handling, and KPI View Creations)
+* **Scripting:** Python (Exploratory Data Analysis, Data Profiling)
+* **BI Platform:** Microsoft Power BI
+* **Analytical Engine:** DAX (Data Analysis Expressions) for complex dynamic measures, time intelligence, and operational tracking.
 
 ---
 
-## 📊 Dashboard Pages
-
-<details>
-<summary><b>📅 Bookings</b> — Monthly volume, payment splits & top pickup zones</summary>
-<br/>
-<img src="Bookings.png" alt="Bookings Dashboard" width="100%"/>
-</details>
-
-<details>
-<summary><b>💰 Revenue</b> — Daily trends, vehicle earnings & payment method breakdown</summary>
-<br/>
-<img src="Revenue.png" alt="Revenue Dashboard" width="100%"/>
-</details>
-
-<details>
-<summary><b>❌ Cancellations</b> — Driver vs customer reasons, vehicle rates & VTAT analysis</summary>
-<br/>
-<img src="Cancellations.png" alt="Cancellations Dashboard" width="100%"/>
-</details>
-
-<details>
-<summary><b>⭐ Ratings</b> — Driver rating distribution, vehicle averages & monthly trends</summary>
-<br/>
-<img src="Ratings.png" alt="Ratings Dashboard" width="100%"/>
-</details>
+## 📊 Core KPI Matrix (Executive Summary)
+* **Total Bookings:** 50,000
+* **Gross Revenue:** ₹34.27M
+* **Average Booking Value:** ₹685.35
+* **Average Ride Distance:** 17.04 km
+* **Overall Success Rate:** 66.97%
+* **Total Cancellation Rate:** 33.03%
 
 ---
 
-## 🔍 Key Insights
+## 🖥️ Dashboard Views & Analytical Breakdown
 
-### 📅 Bookings
-> - Daily volume stays **steady at 1,500–2,000 rides/day** with no major spikes — strong operational consistency
-> - **Wallet** leads payment preference at **33%**, followed by Cash (17.1%), UPI (16.86%), and Card (16.57%) — digital payments dominate
-> - **Area-8 & Area-9** are the busiest pickup zones, suggesting high-density demand hotspots worth prioritizing for driver allocation
+### 1. Overview Dashboard
+*Comprehensive high-level view monitoring health metrics across the entire platform.*
 
-### 💰 Revenue
-> - Revenue holds at a **stable ~₹1M/day** for most of January, with an unexpected **sharp drop on Day 31** worth investigating
-> - **Bike generates the highest revenue** across vehicle types — likely driven by high volume and frequency
-> - **Wallet and Cash** together contribute the bulk of booking value across all vehicle segments
+![Overview](./Images/Overview.png)
 
-### ❌ Cancellations
-> - **"N/A"** dominates both driver and customer cancellation reasons — a **data quality gap** that limits actionability; improving capture at source is recommended
-> - Among known reasons, drivers cite **"More than permitted"** most; customers cite **"Driver not moving"** and **"AC not working"** — operational and comfort issues are primary friction points
-> - **Prime Plus, Prime Sedan & Prime SUV** show the highest cancellation rates (~32–35%), suggesting premium rides face more expectation mismatches
-> - **VTAT vs Cancellation Rate** scatter shows no strong correlation — cancellations aren't simply a wait-time problem
+* **Visual Elements:** KPI Cards, Booking Status Donut Chart, Vehicle Type Bar Chart, and Hourly Booking Heat Matrix.
+* **Key Insights:** * Out of 50K total bookings, **33.48K (66.97%)** were completed successfully.
+  * Operational leakage splits between **Driver Cancellations (19.22%)** and **Customer Cancellations (7.6%)**.
+  * Demand is uniformly distributed across ride classes (Prime Plus, Bike, Prime Sedan, SUV, Auto, eBike), with each vehicle type hovering near the **7K booking mark**.
 
-### ⭐ Ratings
-> - Rating distribution is **heavily skewed to 0** — most rides go unrated, signaling a need for better in-app rating prompts
-> - **All vehicle types average ~2.5–3**, with **Auto slightly leading** — consistently modest scores across the board
-> - **Customer and Driver ratings track closely** throughout January (2.6–2.8), with a notable **spike around Day 19–20**
+### 2. Bookings Analysis
+*Granular tracking of volume distributions across timelines and geography.*
 
----
+![Bookings](./Images/Bookings.png)
 
-## 🛠️ Tech Stack
+* **Visual Elements:** Daily Booking Volume Trendline, Payment Method Distribution, and Top 10 Pickup Locations.
+* **Key Insights:**
+  * Daily volume remains highly consistent, fluctuating reliably between **1,500 to 1,750 bookings per day** across a 31-day cycle.
+  * **Payment Split:** Cash and Wallet capture the majority share of transactions (combining for over **49.5%** of payment methods), while digital UPI tracks closely at **16.86%**.
+  * **Hotspots:** `Area-8`, `Area-9`, and `Area-48` emerge as the top 3 highest-density pickup demand centers.
 
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| 📊 Visualization | **Power BI Desktop** | Dashboard design, interactivity, report pages |
-| 🧮 Calculation | **DAX** | KPIs — Success Rate, Cancellation Rate, Avg Value |
-| 🐍 Processing | **Python (pandas)** | Data cleaning, null handling, feature engineering |
-| 🗄️ Querying | **SQL** | Data extraction, aggregations, filtering |
-| 📦 Data Source | **Kaggle** | Raw OLA ride-booking dataset |
+### 3. Cancellations & VTAT Analysis
+*Deep dive into service friction, drop-off reasons, and Vehicle Turnaround Time (VTAT).*
 
----
+![Cancellations](./Images/Cancellations.png)
 
-## 🧮 DAX Measures
+* **Visual Elements:** Driver Reason Breakdown, Customer Reason Breakdown, Cancellation Rate by Vehicle Type, and VTAT vs. Cancellation Rate Scatter Plot.
+* **Key Insights:**
+  * The single largest driver-side bottleneck is tracked under unrecorded reasons, alongside distinct clusters of *"More than permitted passengers"* and *"Customer-related issues."*
+  * Customer cancellations are heavily influenced by logistical friction, primarily *"Driver is not moving towards pickup location"* and *"AC is not working."*
+  * **VTAT Correlation:** Vehicle Turnaround Time has a direct, visible mapping against high cancellation rates. `Prime Plus` exhibits the highest overall cancellation rate (~33.7%) tied directly to an elevated VTAT score.
 
-```dax
--- Success Rate
-Success Rate =
-DIVIDE(
-    COUNTROWS(FILTER('Bookings', 'Bookings'[Status] = "Success")),
-    COUNTROWS('Bookings')
-) * 100
+### 4. Ratings & Sentiment Distribution
+*Analysis of quality control, user satisfaction, and operator performance loops.*
 
--- Cancellation Rate
-Cancellation Rate =
-DIVIDE(
-    COUNTROWS(FILTER('Bookings', 'Bookings'[Status] <> "Success")),
-    COUNTROWS('Bookings')
-) * 100
+![Ratings](./Images/Ratings.png)
 
--- Average Booking Value
-Avg Booking Value = AVERAGE('Bookings'[Booking_Value])
+* **Visual Elements:** Driver Rating Distribution Histogram, Avg Rating by Vehicle Type, and Dual-Axis Customer vs. Driver Rating Daily Trend.
+* **Key Insights:**
+  * A massive, distinct cluster of **0-star ratings (~16K bookings)** indicates a heavy footprint of cancelled or failed rides where ratings default or reflect extreme customer dissatisfaction.
+  * Successful ride ratings are tightly packed between **3.0 and 5.0 stars**.
+  * Average driver ratings across active vehicle types remain strictly clustered around **2.65 to 2.70**, signaling a systemic need for driver behavior training or ride-quality audits.
 
--- Total Revenue
-Total Revenue = SUM('Bookings'[Booking_Value])
-```
+### 5. Revenue Stream Analytics
+*Financial evaluation tracking payment pipelines, vehicle yields, and daily revenue generation.*
+
+![Revenue](./Images/Revenue.png)
+
+* **Visual Elements:** Payment Method Segmented Bar Chart by Vehicle Type, Stacked Daily Revenue Waveform ("Jan 2024").
+* **Key Insights:**
+  * Revenue streams are equally distributed across all vehicle verticals (Bikes, Sedans, Prime Plus, Autos), indicating a healthy diversified portfolio where low-ticket high-volume rides (Bikes/Autos) balance high-ticket lower-volume rides (SUVs/Prime).
+  * **The Day 31 Drop:** The daily revenue trend tracks consistently around **₹1.1M to ₹1.2M daily** before experiencing an aggressive drop-off on Day 31, isolating a data ingestion truncation or an operational reporting cutoff that requires backend investigation.
 
 ---
 
-## 🐍 Python — Data Preprocessing
-
-```python
-import pandas as pd
-
-df = pd.read_csv('ola_bookings.csv')
-
-# Fill missing cancellation reasons
-df['Reason for Cancelling by Driver'].fillna('N/A', inplace=True)
-df['Reason for Cancelling by Customer'].fillna('N/A', inplace=True)
-
-# Extract booking hour for time-of-day analysis
-df['Hour'] = pd.to_datetime(df['Booking_Time']).dt.hour
-
-# Clean numeric columns
-df['Booking_Value'] = pd.to_numeric(df['Booking_Value'], errors='coerce')
-df['Ride_Distance'] = pd.to_numeric(df['Ride_Distance'], errors='coerce')
-
-print(df.describe())
-print(df['Status'].value_counts(normalize=True))
-```
+## 📈 Strategic Business Recommendations
+1. **Optimize VTAT in High-Premium Segments:** Focus operational efficiency on `Prime Plus` and `Prime SUV` lines. Reducing vehicle turnaround times in these categories will directly suppress their industry-high cancellation rates (~33.7%).
+2. **Resolve "Driver Not Moving" Friction:** Implement stricter automated app pings or algorithmic reassignment windows for drivers who remain stationary post-acceptance, directly mitigating the top customer cancellation driver.
+3. **Address the Zero-Rating Surge:** Isolate the 16K zero-rating spike to confirm whether it is an application logging bug for unfulfilled rides or genuine customer backlash due to driver behavior and mechanical failure (e.g., faulty ACs).
 
 ---
 
-## 🗄️ SQL — Sample Queries
-
-```sql
--- Revenue & bookings by vehicle type
-SELECT
-    Vehicle_Type,
-    COUNT(Booking_ID)       AS Total_Bookings,
-    SUM(Booking_Value)      AS Total_Revenue,
-    AVG(Ride_Distance)      AS Avg_Distance
-FROM ola_bookings
-GROUP BY Vehicle_Type
-ORDER BY Total_Revenue DESC;
-
--- Cancellation rate by vehicle
-SELECT
-    Vehicle_Type,
-    ROUND(
-        SUM(CASE WHEN Status != 'Success' THEN 1 ELSE 0 END) * 100.0
-        / COUNT(*), 2
-    ) AS Cancellation_Rate_Pct
-FROM ola_bookings
-GROUP BY Vehicle_Type
-ORDER BY Cancellation_Rate_Pct DESC;
-
--- Top 10 pickup locations
-SELECT TOP 10
-    Pickup_Location,
-    COUNT(Booking_ID) AS Total_Bookings
-FROM ola_bookings
-GROUP BY Pickup_Location
-ORDER BY Total_Bookings DESC;
-```
-
----
-
-## 📁 Project Structure
+## 🚀 How to Run this Project Locally
+1. Clone this repository to your local machine.
+2. Open the `.pbix` file inside **Microsoft Power BI Desktop**.
+3. Ensure you have the underlying Kaggle CSV dataset connected if you wish to refresh the data model mesh.
+4. If checking backend queries, look at the included `.sql` script files for raw transformation queries.
