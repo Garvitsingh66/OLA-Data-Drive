@@ -20,6 +20,12 @@
 
 ---
 
+## Project Objective
+
+The goal of this project is to analyze OLA ride-hailing data for January 2024 and build an interactive Power BI dashboard that provides actionable insights across four key business areas — bookings, revenue, cancellations, and ratings. The project covers the complete data pipeline from raw data extraction using SQL and Python preprocessing to DAX-powered KPIs and visual storytelling in Power BI, enabling data-driven decisions around operational efficiency, customer experience, and revenue optimization.
+
+---
+
 ## At a Glance
 
 <div align="center">
