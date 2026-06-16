@@ -187,5 +187,49 @@ ORDER BY Total_Bookings DESC;
 ```
 
 ---
+---
+
+## Getting Started
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/OLA-Data-Drive.git
+cd OLA-Data-Drive
+
+# 2. Install Python dependencies
+pip install pandas numpy matplotlib seaborn
+
+# 3. Open the Power BI template
+#    Launch Power BI Desktop
+#    Open OLA_Data_Drive.pbit
+#    Connect to your dataset when prompted
+```
+
+---
+
+## Dataset
+
+- **Source:** [Kaggle — OLA Ride Bookings](https://www.kaggle.com)
+- **Period:** January 2024
+- **Volume:** ~50,000 ride records
+- **Key Fields:** `Booking_ID`, `Vehicle_Type`, `Pickup_Location`, `Drop_Location`, `Ride_Distance`, `Booking_Value`, `Payment_Method`, `Driver_Rating`, `Customer_Rating`, `Cancellation_Reason`, `Status`
+
+---
+
+## Author
+
+**Garvit Singh**
+Aspiring Data Analyst | Power BI Enthusiast
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat&logo=github&logoColor=white)](https://github.com)
+
+---
+
+## Support
+
+If you found this project useful, give it a star on GitHub!
+
+[![Star on GitHub](https://img.shields.io/github/stars/your-username/OLA-Data-Drive?style=social)](https://github.com/your-username/OLA-Data-Drive)
 
 ## Project Structure
