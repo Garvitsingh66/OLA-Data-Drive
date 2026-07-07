@@ -1,235 +1,114 @@
-<div align="center">
+# OLA Data Drive — Ride Performance Hub & Cancellation Prediction
 
-# OLA Data Drive — Ride Performance Hub
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat&logo=scikitlearn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-006400?style=flat)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
 
-<img src="Images/Overview.png" alt="OLA Dashboard Overview" width="100%"/>
+End-to-end analytics project on **50,000 OLA ride records** — combining a Power BI dashboard (business-facing KPIs and trends) with a machine learning model (predicting ride cancellations) built on the same dataset.
 
-<br/>
+**Highlight:** This project includes a real data leakage investigation — an initial model scored a misleading ~93% accuracy, which was diagnosed, explained, and corrected to produce an honest result. See [Key Finding](#key-finding) below.
 
-[![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
-[![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](#)
-[![DAX](https://img.shields.io/badge/DAX-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](#)
-[![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/)
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Part 1: Power BI Dashboard](#part-1-power-bi-dashboard)
+- [Part 2: ML Cancellation Prediction](#part-2-ml-cancellation-prediction)
+- [Key Finding](#key-finding)
+- [Tech Stack](#tech-stack)
+- [Files](#files)
+- [Future Work](#future-work)
+- [Contact](#contact)
 
-**An end-to-end Power BI analytics dashboard on OLA ride-hailing operations — January 2024**
+## Project Overview
 
-[View Dashboard Pages](#dashboard-pages) · [Key Insights](#key-insights) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started)
+This project has two connected parts:
 
-</div>
-
----
-
-## Project Objective
-
-The goal of this project is to analyze OLA ride-hailing data for January 2024 and build an interactive Power BI dashboard that provides actionable insights across four key business areas — bookings, revenue, cancellations, and ratings. The project covers the complete data pipeline from raw data extraction using SQL and Python preprocessing to DAX-powered KPIs and visual storytelling in Power BI, enabling data-driven decisions around operational efficiency, customer experience, and revenue optimization.
-
----
-
-## At a Glance
-
-<div align="center">
-
-| Total Bookings | Total Revenue | Avg Booking Value | Avg Ride Distance | Success Rate | Cancellation Rate |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| **50,000** | **34.27M** | **685.35** | **17.04 km** | **66.97%** | **33.03%** |
-
-</div>
+1. **Power BI Dashboard** — a 4-page interactive dashboard analyzing bookings, revenue, ratings, and cancellations.
+2. **ML Cancellation Prediction** — a classification model built on the same data, extending the BI findings with a predictive approach and a real investigation into data leakage.
 
 ---
 
-## Dashboard Pages
+## Part 1: Power BI Dashboard
 
-<details>
-<summary><b>Bookings</b> — Monthly volume, payment splits & top pickup zones</summary>
-<br/>
-<img src="Images/Bookings.png" alt="Bookings Dashboard" width="100%"/>
-</details>
+A 4-page interactive dashboard built with Power BI, DAX, and Power Query on 50,000 ride records.
 
-<details>
-<summary><b>Revenue</b> — Daily trends, vehicle earnings & payment method breakdown</summary>
-<br/>
-<img src="Images/Revenue.png" alt="Revenue Dashboard" width="100%"/>
-</details>
-
-<details>
-<summary><b>Cancellations</b> — Driver vs customer reasons, vehicle rates & VTAT analysis</summary>
-<br/>
-<img src="Images/Cancellations.png" alt="Cancellations Dashboard" width="100%"/>
-</details>
-
-<details>
-<summary><b>Ratings</b> — Driver rating distribution, vehicle averages & monthly trends</summary>
-<br/>
-<img src="Images/Ratings.png" alt="Ratings Dashboard" width="100%"/>
-</details>
-
----
-
-## Key Insights
+### Overview
+![Overview](Overview.png)
+Summarizes overall ride volume, **66.97% booking success rate**, and **₹685 average booking value** across the full dataset.
 
 ### Bookings
-> - Daily volume stays **steady at 1,500–2,000 rides/day** with no major spikes — strong operational consistency
-> - **Wallet** leads payment preference at **33%**, followed by Cash (17.1%), UPI (16.86%), and Card (16.57%) — digital payments dominate
-> - **Area-8 & Area-9** are the busiest pickup zones, suggesting high-density demand hotspots worth prioritizing for driver allocation
-
-### Revenue
-> - Revenue holds at a **stable ~1M/day** for most of January, with an unexpected **sharp drop on Day 31** worth investigating
-> - **Bike generates the highest revenue** across vehicle types — likely driven by high volume and frequency
-> - **Wallet and Cash** together contribute the bulk of booking value across all vehicle segments
+![Bookings](Bookings.png)
+Breaks down ride volume trends across time, vehicle type, and payment method.
 
 ### Cancellations
-> - **"N/A"** dominates both driver and customer cancellation reasons — a **data quality gap** that limits actionability; improving capture at source is recommended
-> - Among known reasons, drivers cite **"More than permitted"** most; customers cite **"Driver not moving"** and **"AC not working"** — operational and comfort issues are primary friction points
-> - **Prime Plus, Prime Sedan & Prime SUV** show the highest cancellation rates (~32–35%), suggesting premium rides face more expectation mismatches
-> - **VTAT vs Cancellation Rate** scatter shows no strong correlation — cancellations are not simply a wait-time problem
+![Cancellations](Cancellations.png)
+Investigates the **33% cancellation rate**, comparing driver-side vs. customer-side cancellation reasons using DAX measures. Statistical (scatter-based) analysis found **no strong correlation between wait time and cancellations** — a finding later confirmed independently by the ML model in Part 2.
 
 ### Ratings
-> - Rating distribution is **heavily skewed to 0** — most rides go unrated, signaling a need for better in-app rating prompts
-> - **All vehicle types average ~2.5–3**, with **Auto slightly leading** — consistently modest scores across the board
-> - **Customer and Driver ratings track closely** throughout January (2.6–2.8), with a notable **spike around Day 19–20**
+![Ratings](Ratings.png)
+Tracks driver and customer rating trends across the dataset.
+
+### Revenue
+![Revenue](Revenue.png)
+Tracks booking value trends and revenue drivers across vehicle types and time periods.
+
+---
+
+## Part 2: ML Cancellation Prediction
+
+**Goal:** Predict whether a ride will be cancelled, using only information genuinely available *before* the ride happens (booking-time features) — extending the BI dashboard's cancellation analysis into a predictive model.
+
+### Approach
+
+1. Loaded the same 50,000-record dataset used in the BI dashboard.
+2. Defined a binary target: `is_cancelled` (from `Booking Status`).
+3. **Investigated an initial model that scored ~93% accuracy** with Random Forest and XGBoost — found it was driven entirely by **data leakage**: features like Booking Value, Ride Distance, Driver Ratings, Customer Rating, and Payment Method are only recorded *after* a ride completes, so they were `NaN` for every cancelled ride by construction. The models were learning "missing value = cancelled," not any real cancellation driver.
+4. Removed all leaky, post-outcome fields.
+5. Engineered genuine pre-ride features instead:
+   - `hour_of_day`, `day_of_week`, `is_weekend` (from booking timestamp)
+   - Grouped `Pickup Location` / `Drop Location` into top-15 zones + "Other"
+   - `Vehicle Type`
+   - `cust_past_cancel_rate` — each customer's cancellation rate computed only from their *prior* rides (no leakage from the current ride's outcome)
+6. Trained and compared Logistic Regression, Random Forest, and XGBoost on the corrected feature set.
+
+### Results: Before vs. After Fixing Leakage
+
+| Stage | Model | Accuracy | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| Before fix (leaky features) | Random Forest | 0.93 | 0.80 | 1.00 | 0.89 |
+| Before fix (leaky features) | XGBoost | 0.93 | 0.80 | 1.00 | 0.89 |
+| After fix (clean features) | Logistic Regression | 0.49 | 0.27 | 0.52 | 0.36 |
+| After fix (clean features) | Random Forest | ~0.5 | ~0.3 | ~0.5 | ~0.3 |
+| After fix (clean features) | XGBoost | ~0.5 | ~0.3 | ~0.5 | ~0.3 |
+
+*Baseline (always predict "not cancelled"): 73.2% accuracy.*
+
+The drop after removing leaky features is the point, not a failure — it shows the original 93% was an artifact of data leakage, not a real model.
+
+### Key Finding
+
+The corrected result shows that available pre-ride fields — time of day, day of week, vehicle type, pickup/drop zone, and customer cancellation history — carry **little independent predictive power** for cancellation, performing near or below the majority-class baseline.
+
+This confirms and extends the BI dashboard's earlier finding that wait time doesn't correlate strongly with cancellations. Together, both analyses point to the same conclusion: **cancellations are likely driven by real-time operational factors not captured in this dataset** — e.g., live driver distance at time of booking, real-time traffic conditions, or surge pricing — rather than static, booking-time attributes.
+
+### What This Demonstrates
+
+- Diagnosing and correcting data leakage **twice** in the same pipeline, rather than reporting an inflated, misleading accuracy score
+- Feature engineering under a realistic constraint (only using data available *before* the outcome)
+- Correct model evaluation on imbalanced classes (precision/recall/F1/ROC-AUC — not just accuracy)
+- Drawing a consistent conclusion across two different analytical approaches (BI + ML) on the same dataset
+- Comfort reporting an honest negative result and explaining *why*, instead of overselling a number
 
 ---
 
 ## Tech Stack
 
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| Visualization | **Power BI Desktop** | Dashboard design, interactivity, report pages |
-| Calculation | **DAX** | KPIs — Success Rate, Cancellation Rate, Avg Value |
-| Processing | **Python (pandas)** | Data cleaning, null handling, feature engineering |
-| Querying | **SQL** | Data extraction, aggregations, filtering |
-| Data Source | **Kaggle** | Raw OLA ride-booking dataset |
+| Category | Tools |
+|---|---|
+| BI & Visualization | Power BI, DAX, Power Query |
+| Data Processing | Python (Pandas, NumPy), SQL |
+| Machine Learning | Scikit-learn, XGBoost |
+| Modeling Techniques | Logistic Regression, Random Forest, Gradient Boosting |
 
----
-
-## DAX Measures
-
-```dax
--- Success Rate
-Success Rate =
-DIVIDE(
-    COUNTROWS(FILTER('Bookings', 'Bookings'[Status] = "Success")),
-    COUNTROWS('Bookings')
-) * 100
-
--- Cancellation Rate
-Cancellation Rate =
-DIVIDE(
-    COUNTROWS(FILTER('Bookings', 'Bookings'[Status] <> "Success")),
-    COUNTROWS('Bookings')
-) * 100
-
--- Average Booking Value
-Avg Booking Value = AVERAGE('Bookings'[Booking_Value])
-
--- Total Revenue
-Total Revenue = SUM('Bookings'[Booking_Value])
-```
-
----
-
-## Python — Data Preprocessing
-
-```python
-import pandas as pd
-
-df = pd.read_csv('ola_bookings.csv')
-
-# Fill missing cancellation reasons
-df['Reason for Cancelling by Driver'].fillna('N/A', inplace=True)
-df['Reason for Cancelling by Customer'].fillna('N/A', inplace=True)
-
-# Extract booking hour for time-of-day analysis
-df['Hour'] = pd.to_datetime(df['Booking_Time']).dt.hour
-
-# Clean numeric columns
-df['Booking_Value'] = pd.to_numeric(df['Booking_Value'], errors='coerce')
-df['Ride_Distance'] = pd.to_numeric(df['Ride_Distance'], errors='coerce')
-
-print(df.describe())
-print(df['Status'].value_counts(normalize=True))
-```
-
----
-
-## SQL — Sample Queries
-
-```sql
--- Revenue & bookings by vehicle type
-SELECT
-    Vehicle_Type,
-    COUNT(Booking_ID)       AS Total_Bookings,
-    SUM(Booking_Value)      AS Total_Revenue,
-    AVG(Ride_Distance)      AS Avg_Distance
-FROM ola_bookings
-GROUP BY Vehicle_Type
-ORDER BY Total_Revenue DESC;
-
--- Cancellation rate by vehicle
-SELECT
-    Vehicle_Type,
-    ROUND(
-        SUM(CASE WHEN Status != 'Success' THEN 1 ELSE 0 END) * 100.0
-        / COUNT(*), 2
-    ) AS Cancellation_Rate_Pct
-FROM ola_bookings
-GROUP BY Vehicle_Type
-ORDER BY Cancellation_Rate_Pct DESC;
-
--- Top 10 pickup locations
-SELECT TOP 10
-    Pickup_Location,
-    COUNT(Booking_ID) AS Total_Bookings
-FROM ola_bookings
-GROUP BY Pickup_Location
-ORDER BY Total_Bookings DESC;
-```
-
----
----
-
-## Getting Started
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/OLA-Data-Drive.git
-cd OLA-Data-Drive
-
-# 2. Install Python dependencies
-pip install pandas numpy matplotlib seaborn
-
-# 3. Open the Power BI template
-#    Launch Power BI Desktop
-#    Open OLA_Data_Drive.pbit
-#    Connect to your dataset when prompted
-```
-
----
-
-## Dataset
-
-- **Source:** [Kaggle — OLA Ride Bookings](https://www.kaggle.com)
-- **Period:** January 2024
-- **Volume:** ~50,000 ride records
-- **Key Fields:** `Booking_ID`, `Vehicle_Type`, `Pickup_Location`, `Drop_Location`, `Ride_Distance`, `Booking_Value`, `Payment_Method`, `Driver_Rating`, `Customer_Rating`, `Cancellation_Reason`, `Status`
-
----
-
-## Author
-
-**Garvit Singh**
-Aspiring Data Analyst | Power BI Enthusiast
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat&logo=github&logoColor=white)](https://github.com)
-
----
-
-## Support
-
-If you found this project useful, give it a star on GitHub!
-
-[![Star on GitHub](https://img.shields.io/github/stars/your-username/OLA-Data-Drive?style=social)](https://github.com/your-username/OLA-Data-Drive)
-
-## Project Structure
+## Files
