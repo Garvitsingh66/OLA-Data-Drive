@@ -34,23 +34,23 @@ This project has two connected parts:
 A 4-page interactive dashboard built with Power BI, DAX, and Power Query on 50,000 ride records.
 
 ### Overview
-![Overview](Overview.png)
+![Overview](Images/Overview.png)
 Summarizes overall ride volume, **66.97% booking success rate**, and **₹685 average booking value** across the full dataset.
 
 ### Bookings
-![Bookings](Bookings.png)
+![Bookings](Images/Bookings.png)
 Breaks down ride volume trends across time, vehicle type, and payment method.
 
 ### Cancellations
-![Cancellations](Cancellations.png)
+![Cancellations](Images/Cancellations.png)
 Investigates the **33% cancellation rate**, comparing driver-side vs. customer-side cancellation reasons using DAX measures. Statistical (scatter-based) analysis found **no strong correlation between wait time and cancellations** — a finding later confirmed independently by the ML model in Part 2.
 
 ### Ratings
-![Ratings](Ratings.png)
+![Ratings](Images/Ratings.png)
 Tracks driver and customer rating trends across the dataset.
 
 ### Revenue
-![Revenue](Revenue.png)
+![Revenue](Images/Revenue.png)
 Tracks booking value trends and revenue drivers across vehicle types and time periods.
 
 ---
@@ -112,3 +112,40 @@ This confirms and extends the BI dashboard's earlier finding that wait time does
 | Modeling Techniques | Logistic Regression, Random Forest, Gradient Boosting |
 
 ## Files
+
+```
+├── OLA_Dashboard.pbix                     # Power BI dashboard
+├── ola_cancellation_prediction_v2.py      # Final ML pipeline (leakage-corrected)
+├── Images/
+│   ├── Overview.png
+│   ├── Bookings.png
+│   ├── Cancellations.png
+│   ├── Ratings.png
+│   └── Revenue.png
+└── README.md
+```
+
+## Future Work
+
+- Incorporate real-time features (live driver distance at booking, real-time traffic, surge pricing) if such data becomes available, to test whether they carry stronger predictive signal than static booking-time fields
+- Try time-aware train/test splitting instead of random splitting, to better simulate real-world deployment
+- Explore whether `cust_past_cancel_rate` has stronger signal when restricted to customers with a longer ride history
+
+---
+
+<details>
+<summary><b>Resume bullet (click to expand)</b></summary>
+
+> Built a ride-cancellation prediction pipeline on 50K records; diagnosed and corrected data leakage from post-outcome features (initial 93% accuracy → honest ~50%), engineering pre-ride features including customer cancellation history, and connected findings to an existing Power BI dashboard analysis.
+
+</details>
+
+---
+
+## Contact
+
+**Garvit Singh**
+GitHub: [github.com/Garvitsingh66](https://github.com/Garvitsingh66)
+LinkedIn: [linkedin.com/in/garvitsingh66](https://linkedin.com/in/garvitsingh66)
+
+*Part of a broader data analytics portfolio — see [Airbnb Performance Dashboard](https://github.com/Garvitsingh66/AirBnb-Performance-Dashboard) and [Customer Behavior Dashboard](https://github.com/Garvitsingh66/Customer-Behavior-Dashboard) for related projects.*
